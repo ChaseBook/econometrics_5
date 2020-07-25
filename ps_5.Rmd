@@ -235,6 +235,8 @@ ggpairs(
 Data from 2008 CPS  
   
 **E) **  
+COLE STATA TABLE HERE  
+
 ```{r, include=FALSE}
 model_1 <- lm(ln_wage ~ ln_educ, data = cps_ln)
 tidy1<- model_1 %>% 
@@ -335,12 +337,26 @@ uncorrelated with education.
   
 **K) **  
 Model 5 regresses ln_wage on education, experience, the dummy variable female,
-and the interaction variable, female_educ. The coefficient estimate on education
-is 0.105, meaning that for an increase of one year in education, holding all
-else constant, we expect an 10.5% increase in hourly wage. The coefficient
-estimate on experience is 0.012, meaning that for an increase of one year in
-experience, holding all else constant, we expect an 1.2% increase in hourly
-wage.
+and the interaction term, female_educ. The coefficient estimate on education is
+0.105, meaning that when the female dummy variable equals zero, an increase of
+one year in education holding all else constant is expected to yield a 10.5%
+increase in hourly wage. The coefficient estimate on experience is 0.012,
+meaning that for an increase of one year in experience, holding all else
+constant, we expect an 1.2% increase in hourly wage. The female dummy variable
+has a coefficient estimate of -0.551, meaning that holding all else constant and
+given an education level of zero, we expect switching from male to female
+subjects to decrease hourly wages by 55.1%. The coefficient estimate on the
+interaction term of female and education is 0.023. This estimate captures the
+difference in effects of an additional year of education on wage for a female
+compared to a male. In essence, this coefficient estimate means that for an
+additional year of education, a female is expected to experience a 2.3% increase
+in wage on top of the expected 10.5% increase captured by the education
+coefficient. From this model, it appears that there is a gap in earnings between
+men and women. It is also worth noting that the impact of an additional year of
+education on hourly wage is higher for a woman than a man. Therefore, the return
+on education is higher for females.  
+
+**L) **
 
 
 
