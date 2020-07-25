@@ -256,7 +256,7 @@ model_5 <- lm(ln_wage ~ educ + exp + female + female*educ, data = cps_ln)
 tidy5<- model_5 %>% 
   tidy()
 
-stargazer(model_2, model_3, type = "text")
+stargazer(model_2, model_4, type = "text")
 ```
   
 **F) **  
@@ -285,29 +285,62 @@ in model 1, confirming that model 2 is a better fit for the data than model 1.
   
 **H) **  
 Model 3 regresses ln_wage on education and experience. The coefficient on
-education means that for an increase of one year in education, we expect an
-11.4% increase in hourly wage. This is greater than the coefficient estimate on
-on education in model 2, which does not include experience in the model. The
-coefficient on experience means that for an additional year of experience, we
-expect an increase of 1.2% in hourly wage. We indeed find that there is omitted
-variable bias. From model 3, we see that experience has a statistically
-significant effect on ln_wage, and education and experience have a correlation
-of -0.148 in the data. Because experience is not controlled for in model 2, we
-see that the explanatory variable of education is correlated with the error term
-in the model, an indicator of OVB. Specifically, we find that the coefficient on
-education is biased downward in model 2. Intuitively, this stems from the
-negative correlation between education and experience and the positive effect of
-experience on wage. Without controlling for experience, as education increases
-and experience tends to decrease, therefore lowering the wage, this negative
-effect of less experience gets lumped with the effect of education. This means
-that in a Monte Carlo setting, the mean of the coefficient estimate on education
-is less than the true coefficient on education.
+education means that holding all else constant for an increase of one year in
+education, we expect an 11.4% increase in hourly wage. This is greater than the
+coefficient estimate on on education in model 2, which does not include
+experience in the model. The coefficient on experience means that for an
+additional year of experience, we expect an increase of 1.2% in hourly wage. We
+indeed find that there is omitted variable bias. From model 3, we see that
+experience has a statistically significant effect on ln_wage, and education and
+experience have a correlation of -0.148 in the data. Because experience is not
+controlled for in model 2, we see that the explanatory variable of education is
+correlated with the error term in the model, an indicator of OVB. Specifically,
+we find that the coefficient on education is biased downward in model 2.
+Intuitively, this stems from the negative correlation between education and
+experience and the positive effect of experience on wage. Without controlling
+for experience, as education increases and experience tends to decrease,
+therefore lowering the wage, this negative effect of less experience gets lumped
+with the effect of education. This means that in a Monte Carlo setting, the mean
+of the coefficient estimate on education is less than the true coefficient on
+education.
 
 ```{r, include=FALSE}
 cps %>% 
   cor()
-```
 
+stargazer(model_4, model_5, type = "text")
+```
+  
+**I) **  
+In model 4, ln_wage is regressed on education, experience, and female. The
+coefficient estimate on education is 0.115, meaning that for an increase of one
+year in education, holding all else constant, we expect an 11.5% increase in
+hourly wage, slightly greater than the coefficient estimate of 0.114 in model 3.
+The coefficient estimate on experience is identical to that of model 3 at 0.012,
+meaning that holding all else constant, an additional one year of experience is
+expected to yield an increase of 1.2% in hourly wage. The new explanatory
+variable, female, has a coefficient estimate of -0.249, meaning that switching
+from a male to female subject, holding all else constant, is expected to
+decrease hourly wage by 24.9%.
+  
+**J) **  
+The coefficient estimate on education are nearly identical in model 3 and model
+4, likely meaning that education and female are not highly correlated. We see
+that this is in fact the case, as the correlation between education and female
+in the data is 0.03. This extremely low correlation means the effect of gender
+when strictly considering the impact of education on hourly wage is nearly
+random. Because of this, if we were only interested in determining the causal
+effect of education on hourly wage, model 3 would suffice, as gender is largely
+uncorrelated with education.  
+  
+**K) **  
+Model 5 regresses ln_wage on education, experience, the dummy variable female,
+and the interaction variable, female_educ. The coefficient estimate on education
+is 0.105, meaning that for an increase of one year in education, holding all
+else constant, we expect an 10.5% increase in hourly wage. The coefficient
+estimate on experience is 0.012, meaning that for an increase of one year in
+experience, holding all else constant, we expect an 1.2% increase in hourly
+wage.
 
 
 
