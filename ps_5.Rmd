@@ -231,13 +231,10 @@ ggpairs(
               combo = wrap("dot", alpha = 0.4,            size=0.2) )
 )
 ```
-  
 Data from 2008 CPS  
   
 **E) **  
-COLE STATA TABLE HERE  
-
-```{r, include=FALSE}
+```{r, echo=FALSE}
 model_1 <- lm(ln_wage ~ ln_educ, data = cps_ln)
 tidy1<- model_1 %>% 
   tidy()
@@ -258,7 +255,13 @@ model_5 <- lm(ln_wage ~ educ + exp + female + female*educ, data = cps_ln)
 tidy5<- model_5 %>% 
   tidy()
 
-stargazer(model_2, model_4, type = "text")
+stargazer(model_1, model_2, model_3, type = "text", title = "Regression Models 1-3")
+```
+  
+    
+NOTE: In the following table, (1) corresponds to Model 4 and (2) corresponds to Model 5
+```{r, echo=FALSE}
+stargazer(model_4, model_5, type = "text", title = "Regression Models 4-5")
 ```
   
 **F) **  
@@ -276,7 +279,7 @@ result in a 9.2% increase in salary using the ln_educ coefficient in model 1.
 The expected percentage payoff of an additonal year of education is even higher
 for individuals with lower initial years of education.  
   
-**G) **
+**G) **  
 Comparing model 1 to model 2, it appears that model 2 - which regresses ln_wage
 on education - is a better fit for the data. The adjusted R-squared value of
 model 2 is larger than that of model 1, with values of 0.202 and 0.164,
@@ -307,10 +310,7 @@ of the coefficient estimate on education is less than the true coefficient on
 education.
 
 ```{r, include=FALSE}
-cps %>% 
-  cor()
-
-stargazer(model_4, model_5, type = "text")
+stargazer(model_1, model_2, model_3, model_4, model_5, type = "text", column.sep.width = "1pt", font.size = "small")
 ```
   
 **I) **  
@@ -356,7 +356,31 @@ men and women. It is also worth noting that the impact of an additional year of
 education on hourly wage is higher for a woman than a man. Therefore, the return
 on education is higher for females.  
 
-**L) **
+**L) **  
+Based on the results from Model 5, we conducted an F-test on the hypothesis that
+gender does not play a role in earnings using the test command in Stata. We
+found the F statistic to be 189.7. Based on the F table and given the level of
+two degrees of freedom, the F critical value we are using is 3.00 at a 5%
+significance level. Therefore, we reject the null hypothesis that gender does
+not play a role in earnings.  
+  
+**M) **  
+We created a new model, incorporating the region dummy variables. Stata omitted
+the West region as the baseline dummy. The coefficient estimate on Northeast
+means that holding all else constant, switching from West to Northeast is
+expected to increase hourly earnings by 5.2%. The coefficient estimate on
+Midwest means that holding all else constant, switching from West to Midwest is
+expected to just slightly increase hourly earnings by 0.2%. Finally, The
+coefficient estimate on South means that holding all else constant, switching
+from West to South is expected to decrease hourly earnings by 4.9%.  
+  
+**N) **  
+Performing an F test on the joint hypothesis that geographic regions do not play
+a role in earnings, we find the F value to be 10.62. Using four degrees of
+freedom, the F critical values for the 5% and 1% significance level are 2.37 and
+3.32, respectively. Therefore, we reject the null hypothesis that geographic
+region does not play a role in earnings at both the 5% and 1% significance
+level.
 
 
 
